@@ -1,82 +1,105 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, TouchableWithoutFeedback, Pressable } from 'react-native';
-import { useState } from 'react'
-import { Button } from 'react-native-web';
+import { Text, Button, View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
+import { TextInput } from "react-native-web";
+import { clickProps } from "react-native-web/dist/cjs/modules/forwardedProps";
+import { UtilsContexto } from "./Context";
+import { useContext, useState } from 'react';
 
-export default function App() {
-  const Stack = createStackNavigator()
-  const {senha, setSenha} = useState("teste")
-  const {email, setEmail} = useState("teste")
 
-  function handlerChange(e)
-  {
-    console.log("valor senha", e)
-  }
 
-  const styles = StyleSheet.create({
-    texto: 
-    {
-      fontSize: '50px',
-      marginVertical: '5px',
-      fontWeight: '600'
+const styles = StyleSheet.create({
+    container: {
+        display: "flex",
+        alignItems: "center",
+        backgroundColor: "lightgray"
     },
-    borda:
-    {
-      height: '80px',
-      width: '250px',
+    texto1: {
+        fontSize: "4em",
+        marginTop: "1em",
+        marginBottom: "0.5em",
+        textAlign: "center",
+        fontWeight: 700
     },
-    textos:
-    {
-      marginLeft:'8px',
-      marginTop: '10px'
+    caixa: {
+
+    },
+    textimput: {
+        width: "25em",
+        backgroundColor: "white",
+        borderRadius: "5px",
+        marginTop: "0.3em",
+        marginBottom: "1.8em"
+
     }
-  })
+});
 
-  return (
-    <View style={{alignItems: 'center', width: '100%'}}>
-      <View>
-        <Text style={styles.texto}>LOGIN</Text>
-      </View>
-      <View style={styles.borda}>
-        <Text style={styles.textos}>email: </Text>
-        <TextInput
-        style={{backgroundColor: 'lightgray', borderRadius: '5px'}}
-        value={email}
-        onChangeText={e => handlerChange(e)}
-        />
-        <Text style={styles.textos}>senha: </Text>
-        <TextInput
-        style={{backgroundColor: 'lightgray', borderRadius: '5px'}}
-        secureTextEntry={true}
-        value={senha}
-        onChangeText={e => handlerChange(e)}
-        />
-      </View>
-      <View>
-        <TouchableOpacity
-          style={{
-            width: '250px',
-            height: '40px',
-            backgroundColor: 'lightgray',
-            marginTop: '100px',
-            borderRadius: '5px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          <Text>Login</Text>
-        </TouchableOpacity>
-        <Pressable
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            marginTop: '10px'
-          }}
-        >
-          <Text>Cadastrar</Text>
-        </Pressable>
-      </View>
-    </View>
-  );
-};
+export default function Login(props) {
+    const { utils, setUtils } = useContext(UtilsContexto)
+
+    const [senha, setSenha] = useState("")
+    const [usuario, setUsuario] = useState("")
+
+    function goToCadastro() {
+        props.navigation.navigate('Cadastro')
+    }
+
+    function goToUsuario() {
+        // if (usuario == utils.nome && senha == utils.senha) {
+            props.navigation.navigate('Usuario')
+        // }
+    }
+
+    return (
+
+        <View style={{ backgroundColor: "lightgray", height: '100%' }}>
+            <View style={styles.container}>
+                <View>
+                    <Text style={styles.texto1}>LOGIN</Text>
+                    <View style={styles.caixa}>
+                        <Text>Email:</Text>
+                        <TextInput
+                            value={usuario}
+                            onChangeText={e => setUsuario(e)}
+                            style={styles.textimput} />
+                    </View>
+                    <View style={styles.caixa}>
+                        <Text>Senha</Text>
+                        <TextInput
+                            secureTextEntry={true}
+                            value={senha}
+                            onChangeText={e => setSenha(e)}
+                            style={styles.textimput} />
+                    </View>
+                </View>
+                <TouchableOpacity onPress={() => goToUsuario()}
+                    style={{
+                        width: "20em",
+                        height: "3em",
+                        innerHeight: "40px",
+                        backgroundColor: "white",
+                        borderRadius: "10px",
+                        display: "flex",
+                        justifyContent: 'center',
+                        alignItems: "center",
+                        marginTop: "13em"
+                    }}
+                >
+                    <Text >Login</Text>
+                </TouchableOpacity>
+                <TouchableWithoutFeedback onPress={() => goToCadastro()}>
+                    <View style={{
+                        width: "200px",
+                        innerHeight: "40px",
+                        backgroundColor: "lightgray",
+                        color: "white",
+                        display: "flex",
+                        alignItems: "center",
+                        marginTop: "1em",
+                        cursor: "pointer"
+                    }}>
+                        <Text style={{ color: "black" }}>Cadastrar</Text>
+                    </View>
+                </TouchableWithoutFeedback>
+            </View>
+        </View>
+    )
+}
