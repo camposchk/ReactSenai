@@ -16,7 +16,7 @@ export default function Cadastro(props) {
 
     function goToLogin() {
         if (senha == senhare) {
-            setUsuarios({ ...usuarios, usuariosArray:[...usuarios.usuariosArray,{nome: nome, idade: idade, sexo: sexo, email: email, senha: senha}] })
+            setUsuarios({ ...usuarios, usuariosArray:[...usuarios.usuariosArray,{nome: nome, idade: idade, sexo: sexo, email: email, senha: senha, id: usuarios.usuariosArray.length}] })
             props.navigation.navigate('Login')
         }
     }

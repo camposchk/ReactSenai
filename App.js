@@ -12,7 +12,6 @@ export default function App() {
 
   const Stack = createStackNavigator();
 
-  // Estado inicial para o array de usuários
   const [usuarios, setUsuarios] = useState({usuariosArray:[]});
 
   return (
