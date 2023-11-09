@@ -1,6 +1,7 @@
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, Image, Switch, } from "react-native";
 import { useContext, useState } from 'react';
 import { UtilsContexto } from "./Context";
+import axios from 'axios';
 
 export default function Cadastro(props) {
 
@@ -18,9 +19,22 @@ export default function Cadastro(props) {
         if (senha == senhare) {
             setUsuarios({ ...usuarios, usuariosArray:[...usuarios.usuariosArray,{nome: nome, idade: idade, sexo: sexo, email: email, senha: senha, id: usuarios.usuariosArray.length}] })
             props.navigation.navigate('Login')
+            apiJava()
         }
     }
 
+    const apiJava = async (nome, idade) =>
+    {
+        try {
+        const response = await axios.post("http://localhost:8080/user", {nome, idade});
+    
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    
     return (
         <View style={styles.container}>
 
